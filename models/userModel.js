@@ -22,9 +22,9 @@ let userSchema = mongoose.Schema({
 
 const User = module.exports = mongoose.model('User', userSchema);
 
-module.exports.getUserById = (id, callback) => {
+module.exports.getUserById = (id, callback)=>{
     User.findById(id, callback);
-};
+}
 
 module.exports.getUserByUsername = (userName, callback) => {
     User.findOne({username: userName}, callback);
@@ -40,5 +40,14 @@ module.exports.addUser = (newUser, callback) => {
             newUser.password = hash;
             newUser.save(callback)
         })
+    });
+};
+
+module.exports.comparePassword = (myPlaintextPassword, hashPassword, callback) => {
+    bcrypt.compare(myPlaintextPassword, hashPassword, (err, res) => {
+        if (err) {
+            throw new Error(`Eroare adaugare user`);
+        }
+        callback(null, res);
     });
 };

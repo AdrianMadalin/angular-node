@@ -1,2 +1,5 @@
-node_modules/
-.ideea/
+# dependencies
+/node_modules
+
+# IDEs and editors
+/.idea

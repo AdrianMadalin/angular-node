@@ -10,6 +10,7 @@ const routes = require('./routes/routes');
 const users = require('./routes/users');
 const config = require('./config/database');
 
+
 // mongoose.connect()
 mongoose.connect(config.database);
 mongoose.connection.on('connected', ()=>{
@@ -30,6 +31,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 //body-parser
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+//passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
+require('./config/passport')(passport);
 
 //routes
 app.use(routes);
